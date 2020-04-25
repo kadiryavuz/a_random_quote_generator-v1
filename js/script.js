@@ -25,6 +25,7 @@ project 1 - A Random Quote Generator
 var lastRandomIndex = -1;
 var lastColorIndex = -1;
 var intervalT;
+var intervalU;
 
 const containerEl = document.getElementsByClassName('container')[0];
 const quoteBoxEl = document.getElementById('quote-box');
@@ -215,7 +216,7 @@ function getRandomQuote() {
  */
 function setContent() {
   //check auto init options and apply necessary
-  if(intervalT) {
+  if(intervalT || intervalU) {
     setRandomColor();
   } else {
     bodyEl.style.backgroundColor = initBodyBackground;
@@ -256,14 +257,22 @@ function autoInit() {
 ***/
 
 function printQuote() {
-  //kill tha auto init session
-  clearInterval(intervalT);
 
-  //reset the value of inteval
-  intervalT = undefined;
+   //clear the intervals
+   clearInterval(intervalT);
+   clearInterval(intervalU);
+ 
+   //reset the value of inteval
+   intervalT = undefined;
+   intervalU = undefined;
+
+  // calls setContent which also enables getRandomQuote call in it
+  // designed to place immediate print when user clicks
+  setContent();
 
   //set content
-  setContent();
+  //in auto init session it was set to 2 secs but to differentiate, this time I applied 5 secs
+  intervalU = setInterval(function(){ setContent(); }, 5000);
 }
 
 

@@ -5,6 +5,6 @@ FSJT Project 1 - A Random Quote Generator
 * When the page is initially loaded, app automatically starts (called Auto Init) displaying randomly selected quotes in every two seconds
 * Auto Init session ends with user's intereaction via "Show another quote" button
 * During the auto init session main background of the app will switch with the randomly selected colors and when it ends it returns the original color
-* When user intereacted with the button, app starts displaying randomly selected quotes upon per click
+* When user intereacted with the button, app starts displaying randomly selected quotes upon per click. Everytime user hits the "Show another quote" button, a recycled auto quote selector session starts for 5 secs duration in each and it alwasy starts with the initial background color
 * It's aimed not to get two same quotes in a row during the random selection. Meaning that user will never see two same quotes in a row. 
 * All quotes are designed to be view in configured font and background colors. 
