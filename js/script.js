@@ -190,10 +190,10 @@ function setRandomColor() {
 
 
 /***
- * `getRandomQuote` function
- * Returns randomly selected index of the quotes 
+ * `generateQuoteIndex` function
+ * Generates randomly selected index within the quotes array 
 ***/
-function getRandomQuote() {
+function generateQuoteIndex() {
   //keeping random index selection this way since it depends on quotes' length: 0-6 for an array with items of 7
   let randomIndex = Math.floor(Math.random() * quotes.length);
 
@@ -212,9 +212,10 @@ function getRandomQuote() {
 
 
 /***
- * `setContent` function
+ * `getRandomQuote` function
+ *  Returns the randomly selected quote from teh quote array
  */
-function setContent() {
+function getRandomQuote() {
   //check auto init options and apply necessary
   if(intervalT || intervalU) {
     setRandomColor();
@@ -223,9 +224,21 @@ function setContent() {
   }
 
   //get random index and create selected quote
-  let retIndex = getRandomQuote();
-  let retQuote = quotes[retIndex];
+  let retIndex = generateQuoteIndex();
+  return quotes[retIndex];
 
+}
+
+
+/***
+ * `modifyDom` function
+ * all dom manipulating codes in one place
+ * designed to use with auto init and another quote sessions
+ */
+
+ function modifyDom(retQuote) {
+
+    /***move this part */
   //give the color styling
   containerEl.style.background = retQuote.color.back;
   containerEl.style.color = retQuote.color.font;
@@ -240,15 +253,16 @@ function setContent() {
   sourceEl.appendChild(citationEl);
   sourceEl.appendChild(yearEl);
   appendTags(retQuote.tags);
-}
+ }
 
 
 /***
  * `autoInit` function
  */
 function autoInit() {
-  setContent();
-  intervalT = setInterval(function(){ setContent(); }, 2000);
+  let quoteObj = getRandomQuote();
+  modifyDom(quoteObj);
+  intervalT = setInterval(function(){ modifyDom(getRandomQuote()); }, 2000);
 }
 
 
@@ -268,11 +282,14 @@ function printQuote() {
 
   // calls setContent which also enables getRandomQuote call in it
   // designed to place immediate print when user clicks
-  setContent();
+  let quoteObj = getRandomQuote();
+
+  //
+  modifyDom(quoteObj);
 
   //set content
   //in auto init session it was set to 2 secs but to differentiate, this time I applied 5 secs
-  intervalU = setInterval(function(){ setContent(); }, 5000);
+  intervalU = setInterval(function(){ modifyDom(getRandomQuote()); }, 5000);
 }
 
 
